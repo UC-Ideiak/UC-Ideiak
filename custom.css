@@ -1,0 +1,150 @@
+/* custom.css — dark theme appearance overrides (loaded after Pico/Astro CSS)
+   - Only appearance changes, no HTML content edits.
+   - Dark palette, improved contrast, responsive adjustments and accessibility support.
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap');
+
+:root{
+  /* Dark theme palette */
+  --bg-900: #06070a; /* page base */
+  --bg-800: #0d1116; /* panels */
+  --bg-700: #141820;
+  --surface: rgba(255,255,255,0.03);
+  --muted: #9aa4b2; /* lighter muted text */
+  --text: #e6eef8; /* primary text */
+  --primary: #2ea6ff; /* accent */
+  --primary-hover: #1b8cff;
+  --card-shadow: 0 10px 30px rgba(2,6,23,0.6);
+  --radius-lg: 12px;
+  --input-border: rgba(255,255,255,0.06);
+}
+
+html,body{height:100%}
+/* Make the site fill the viewport: body is a column flex container and .slot/main take remaining space */
+body{
+  display:flex;
+  flex-direction:column;
+  min-height:100vh;
+  background: linear-gradient(180deg,var(--bg-900),var(--bg-800));
+  color:var(--text);
+  /* Use Montserrat globally with sensible fallbacks */
+  font-family: 'Montserrat', Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+/* The page slot (Astro) should expand to fill available space between header and footer */
+.slot{flex:1;display:flex;flex-direction:column}
+main.container{flex:1;min-height:100%}
+
+/* NAV */
+.nav[data-astro-cid-2zzui5zt]{
+  background: linear-gradient(180deg, rgba(10,12,16,0.6), rgba(6,8,12,0.6));
+  backdrop-filter: blur(6px);
+  border-radius: calc(var(--radius-lg) + 2px);
+  padding: .6rem 1rem;
+  box-shadow: var(--card-shadow);
+  align-items:center;
+}
+.nav[data-astro-cid-2zzui5zt] ul{gap:.5rem;display:flex;align-items:center}
+.nav img{filter:none}
+
+/* Buttons: unify styles for anchors, inputs and button elements */
+.btn, button, input[type="submit"], input[type="button"], a.primary, a[role="button"]{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:.4rem;
+  background:linear-gradient(180deg,var(--primary),var(--primary-hover));
+  color:#061021;
+  padding:.55rem .95rem;
+  border-radius:999px;
+  box-shadow:0 8px 30px rgba(30,140,255,0.12);
+  border:0;
+  text-decoration:none;
+  font-weight:600;
+  cursor:pointer;
+  transition:transform .16s ease,box-shadow .16s ease,opacity .12s ease;
+  font-family:inherit; /* keep site font */
+}
+
+/* Keep a specific rule for anchor appearance when necessary (preserves importance in some builds) */
+a.primary{background:linear-gradient(180deg,var(--primary),var(--primary-hover)) !important;color:#061021 !important}
+
+.btn:hover, button:hover, input[type="submit"]:hover, a.primary:hover, a[role="button"]:hover{
+  transform:translateY(-3px);
+  box-shadow:0 12px 40px rgba(30,140,255,0.18);
+}
+
+/* Ensure link-as-button also looks consistent when it is inline or block */
+a[role="button"]{display:inline-flex}
+
+/* Hero */
+.cta{display:flex;align-items:center;justify-content:space-between;gap:2.5rem}
+.texto{background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.015)); padding:2rem;border-radius:var(--radius-lg);box-shadow:var(--card-shadow);color:var(--text);border:1px solid rgba(255,255,255,0.03)}
+.texto h5{margin:0 0 .6rem 0;font-weight:700}
+.imagen img{max-width:420px;width:100%;height:auto;border-radius:10px;box-shadow:0 10px 30px rgba(2,6,23,0.6)}
+
+/* Forms */
+.formulario{background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); padding:1.25rem;border-radius:var(--radius-lg);box-shadow:var(--card-shadow);border:1px solid rgba(255,255,255,0.03)}
+.formulario input,.formulario textarea,form input,form textarea{border-radius:10px;border:1px solid var(--input-border);padding:.7rem .9rem;background: rgba(0,0,0,0.25);color:var(--text);font-size:1rem}
+.formulario input::placeholder,.formulario textarea::placeholder{color: rgba(150,170,190,0.35)}
+.formulario label{color:var(--muted);font-size:.95rem;font-weight:600}
+.btn,button.btn{background:var(--primary);color:#061021;border-radius:999px;padding:.6rem 1rem;border:0;box-shadow:0 10px 30px rgba(30,140,255,0.12);font-weight:600}
+
+article{border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--card-shadow);border:0;background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01))}
+
+/* Footer */
+.container-fluid:last-of-type{background:transparent;padding:2rem 1rem 3rem 1rem;text-align:center;color:var(--muted)}
+
+/* Responsive */
+@media (max-width:900px){
+  .cta{flex-direction:column;align-items:center;text-align:center}
+  .texto{width:100%}
+  .imagen img{max-width:320px}
+  /* Center people image on tablet devices */
+  .imagen{display:flex;justify-content:center;align-items:center;width:100%;margin-top:.5rem}
+  .imagen img{display:block;margin:0 auto}
+}
+@media (max-width:576px){
+  .nav[data-astro-cid-2zzui5zt]{border-radius:10px;padding:.45rem .6rem}
+  .container{padding:1rem}
+  .formulario{padding:.75rem}
+  .imagen img{max-width:260px}
+  /* Ensure the people image centers correctly on small screens */
+  .imagen{display:flex;justify-content:center;align-items:center;width:100%;margin-top:.5rem}
+  .imagen img{display:block;margin:0 auto}
+}
+
+/* Smaller buttons on small screens for better fit */
+@media (max-width:576px){
+  .btn, button, input[type="submit"], input[type="button"], a.primary, a[role="button"]{
+    padding:.45rem .75rem;
+    font-size:.95rem;
+  }
+}
+
+/* Focus outlines for accessibility */
+:where(a,button,input,textarea):focus{outline:3px solid rgba(46,166,255,0.18);outline-offset:2px}
+
+/* Use focus-visible for better keyboard UX */
+:where(a,button,input,textarea):not(:focus-visible){outline: none}
+:where(a,button,input,textarea:focus-visible){outline: 3px solid rgba(46,166,255,0.28);outline-offset:3px}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce){
+  *{transition:none!important}
+}
+
+/* High-contrast preference: strengthen outlines and remove translucency */
+@media (prefers-contrast: more){
+  :root{--card-shadow: none}
+  .nav[data-astro-cid-2zzui5zt]{background: var(--bg-700); backdrop-filter:none}
+  .formulario{background:var(--bg-700)}
+  a.primary{box-shadow:none}
+  :where(a,button,input,textarea):focus{outline:4px solid #fff; outline-offset:2px}
+}
+
+/* Minor link-as-button tweak */
+a[role="button"]{display:inline-block;padding:.55rem .9rem;border-radius:8px;background:transparent;color:var(--primary);border:1px solid rgba(46,166,255,0.12)}
